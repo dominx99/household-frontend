@@ -1,1 +1,1 @@
-# Duty app
+# Household frontend app

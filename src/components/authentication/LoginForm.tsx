@@ -1,14 +1,28 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import { Button, Card, CardActions, CardContent, CardHeader, FormGroup, TextField } from "@mui/material"
 import { useAppDispatch } from "../../app/hooks"
 import { LoadingButton } from '@mui/lab';
+import { authenticateAsync, AuthenticationCredentials } from "./AuthenticationSlice";
 
 interface Props {}
 
 const LoginForm: FC<Props> = () => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+
+  const [form, setForm] = useState<AuthenticationCredentials>({
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({
+      ...form,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const handleLoginFormSubmitted = async () => {
+    dispatch(authenticateAsync(form))
   }
 
   return (
@@ -19,8 +33,8 @@ const LoginForm: FC<Props> = () => {
       <CardHeader title="Login" />
       <CardContent>
         <FormGroup>
-          <TextField id="outlined-basic" label="Email" variant="outlined" margin={"dense"} />
-          <TextField id="filled-basic" label="Password" type="password" variant="outlined" margin={"dense"} />
+          <TextField onChange={handleChange} name="email" id="login-name" label="Email" variant="outlined" margin={"normal"} />
+          <TextField onChange={handleChange} name="password" id="login-password" label="Password" type="password" variant="outlined" margin={"normal"} />
         </FormGroup>
       </CardContent>
       <CardActions
