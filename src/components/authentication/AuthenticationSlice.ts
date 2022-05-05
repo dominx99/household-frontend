@@ -1,21 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 import { authenticate } from "./AuthenticationAPI";
 
 export interface AuthenticationCredentials {
-  email: string,
+  username: string,
   password: string,
 }
 
-export type AuthenticatedType = {
-  accessToken: string,
+export type AuthenticationDetails = {
+  token: string,
+  refresh_token: string,
 }
 
 export interface AuthenticationState {
-  authenticated: AuthenticatedType | null,
+  authenticationDetails: AuthenticationDetails | null,
+  message: string | null,
 }
 
 const initialState: AuthenticationState = {
-  authenticated: null,
+  authenticationDetails: null,
+  message: null,
 }
 
 export const authenticateAsync = createAsyncThunk(
@@ -30,7 +34,26 @@ export const authenticateAsync = createAsyncThunk(
 const authenticationSlice = createSlice({
   name: "authentication",
   initialState,
-  reducers: {},
+  reducers: {
+    setAuthenticationDetails: (state, { payload }) => {
+      state.authenticationDetails = payload;
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(authenticateAsync.rejected, (state, { error }) => {
+      state.message = error.message ? error.message : 'Invalid details';
+    })
+    builder.addCase(authenticateAsync.fulfilled, (state, { payload }) => {
+      state.authenticationDetails = payload;
+    })
+  }
 })
+
+export const {
+  setAuthenticationDetails,
+} = authenticationSlice.actions;
+
+export const authenticationMessage = (state: RootState) => state.authentication.message;
+export const authenticationDetails = (state: RootState) => state.authentication.authenticationDetails;
 
 export default authenticationSlice.reducer;

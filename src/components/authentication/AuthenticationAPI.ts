@@ -1,10 +1,18 @@
-import axios from "axios";
-import { AuthenticationCredentials } from "./AuthenticationSlice";
+import axios from "./../../app/axios";
+import { AuthenticationCredentials, AuthenticationDetails } from "./AuthenticationSlice";
 
 export function authenticate(authenticationCredentials: AuthenticationCredentials) {
-  return new Promise<{ data: AuthenticationCredentials }>(async (resolve) => {
-    const res = await axios.post('api/authenticate', authenticationCredentials);
+  return new Promise<{ data: AuthenticationDetails }>(async (resolve, reject) => {
+    try {
+      const res = await axios.post('api/v1/login', authenticationCredentials);
 
-    resolve(res);
+      if (res.data && res.data.token && res.data.refresh_token) {
+        localStorage.setItem('AUTHENTICATION_DETAILS', res.data);
+      }
+
+      resolve(res);
+    } catch (e: any) {
+      reject("Invalid credentials");
+    }
   })
 }
