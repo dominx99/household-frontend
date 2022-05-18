@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material"
 import { FC } from "react"
 import LoginForm from "../../components/authentication/LoginForm"
-import { ThemeWrapper } from "./LoginPage.styles"
+import { ThemeWrapper } from "../../components/shared/ThemeWrapper.styles"
 
 interface Props {}
 
