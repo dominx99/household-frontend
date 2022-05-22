@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { authenticate } from "./AuthenticationAPI";
+import { authenticate, invalidateToken } from "./AuthenticationAPI";
 
 export interface AuthenticationCredentials {
   username: string,
@@ -31,6 +31,13 @@ export const authenticateAsync = createAsyncThunk(
   }
 )
 
+export const invalidateTokenAsync = createAsyncThunk(
+  "authentication/invalidateToken",
+  async (authenticationDetails: AuthenticationDetails | null) => {
+    await invalidateToken(authenticationDetails);
+  }
+)
+
 const authenticationSlice = createSlice({
   name: "authentication",
   initialState,
@@ -45,6 +52,9 @@ const authenticationSlice = createSlice({
     })
     builder.addCase(authenticateAsync.fulfilled, (state, { payload }) => {
       state.authenticationDetails = payload;
+    })
+    builder.addCase(invalidateTokenAsync.fulfilled, (state) => {
+      state.authenticationDetails = null;
     })
   }
 })

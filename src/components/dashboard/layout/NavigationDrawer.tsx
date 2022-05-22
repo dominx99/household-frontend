@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -11,10 +10,13 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { isNavigationDrawerOpened, toggleDrawer } from './NavigationSlice';
+import { Logout } from '@mui/icons-material';
+import { authenticationDetails, invalidateTokenAsync } from '../../authentication/AuthenticationSlice';
 
 export default function SwipeableTemporaryDrawer() {
   const dispatch = useAppDispatch();
   const isDrawerOpened = useAppSelector(isNavigationDrawerOpened);
+  const details = useAppSelector(authenticationDetails);
 
   const handleToggleDrawer =
     (opened: boolean) =>
@@ -30,6 +32,10 @@ export default function SwipeableTemporaryDrawer() {
 
       dispatch(toggleDrawer(opened));
     };
+
+  const handleLogout = async () => {
+    dispatch(invalidateTokenAsync(details));
+  }
 
   const list = () => (
     <Box
@@ -58,6 +64,18 @@ export default function SwipeableTemporaryDrawer() {
             <ListItemText primary={text} />
           </ListItem>
         ))}
+      </List>
+      <List>
+        <ListItem
+          button
+          key={"Logout"}
+          onClick={handleLogout}
+        >
+          <ListItemIcon>
+            <Logout />
+          </ListItemIcon>
+          <ListItemText primary={"Logout"} />
+        </ListItem>
       </List>
     </Box>
   );
