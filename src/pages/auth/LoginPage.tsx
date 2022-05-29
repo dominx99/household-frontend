@@ -1,7 +1,7 @@
-import { Grid } from "@mui/material"
-import { FC } from "react"
-import LoginForm from "../../components/authentication/LoginForm"
-import { ThemeWrapper } from "../../components/shared/ThemeWrapper.styles"
+import { Grid } from '@mui/material';
+import { FC } from 'react';
+import LoginForm from '../../components/authentication/LoginForm';
+import { ThemeWrapper } from '../../components/shared/ThemeWrapper.styles';
 
 interface Props {}
 
@@ -18,7 +18,7 @@ const LoginPage: FC<Props> = () => {
         <LoginForm />
       </Grid>
     </ThemeWrapper>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
