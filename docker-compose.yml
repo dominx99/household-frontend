@@ -14,9 +14,9 @@ services:
       - .env
     labels:
       - "traefik.enable=true"
-      - traefik.http.routers.household.rule=Host(`${DOMAIN}`)
-      - "traefik.http.routers.household.entrypoints=web"
       - "traefik.docker.network=proxy"
+      - traefik.http.routers.household.rule=Host(`${DOMAIN}`)
+      - "traefik.http.routers.household.tls.certresolver=lets_encrypt_resolver"
     expose:
       - 8111
     networks:
