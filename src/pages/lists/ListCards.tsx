@@ -1,7 +1,5 @@
-import { Add, More } from "@mui/icons-material";
-import Mail from "@mui/icons-material/Mail";
-import { Badge, Box, Button, Card, CardActions, CardContent, CardHeader, Chip, Container, Grid, IconButton, List as MuiList, ListItem, Paper, Typography } from "@mui/material";
-import styled from "@mui/system/styled";
+import { Add } from "@mui/icons-material";
+import { Box, Button, Card, CardActions, CardContent, Chip, Container, Grid, IconButton, List as MuiList, ListItem, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import CardListItems from "./CardListItems";
 
