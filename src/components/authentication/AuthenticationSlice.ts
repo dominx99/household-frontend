@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { authenticate, invalidateToken } from "./AuthenticationAPI";
 
@@ -33,8 +35,8 @@ export const authenticateAsync = createAsyncThunk(
 
 export const invalidateTokenAsync = createAsyncThunk(
   "authentication/invalidateToken",
-  async (authenticationDetails: AuthenticationDetails | null) => {
-    await invalidateToken(authenticationDetails);
+  (details: AuthenticationDetails | null) => {
+    invalidateToken(details);
   }
 )
 
@@ -52,6 +54,8 @@ const authenticationSlice = createSlice({
     })
     builder.addCase(authenticateAsync.fulfilled, (state, { payload }) => {
       state.authenticationDetails = payload;
+
+      localStorage.setItem('AUTHENTICATION_DETAILS', JSON.stringify(payload));
     })
     builder.addCase(invalidateTokenAsync.fulfilled, (state) => {
       state.authenticationDetails = null;

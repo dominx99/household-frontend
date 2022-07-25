@@ -10,10 +10,24 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { isNavigationDrawerOpened, toggleDrawer } from './NavigationSlice';
-import { Logout } from '@mui/icons-material';
+import { ExpandLess, ExpandMore, Logout, Person, SpaceBar, StarBorder } from '@mui/icons-material';
 import { authenticationDetails, invalidateTokenAsync } from '../../authentication/AuthenticationSlice';
+import { Collapse, ListItemButton } from '@mui/material';
+import { useState } from 'react';
+
+interface State {
+  opened: {
+    groups: boolean
+  },
+}
 
 export default function SwipeableTemporaryDrawer() {
+  const [state, setState] = useState<State>({
+    opened: {
+      groups: false,
+    },
+  });
+
   const dispatch = useAppDispatch();
   const isDrawerOpened = useAppSelector(isNavigationDrawerOpened);
   const details = useAppSelector(authenticationDetails);
@@ -37,34 +51,42 @@ export default function SwipeableTemporaryDrawer() {
     dispatch(invalidateTokenAsync(details));
   }
 
+  const handleClick = (name: string) => {
+    setState(current => {
+      const newName = name as keyof typeof state.opened;
+
+      return {
+        opened: {
+          ...current.opened,
+          [name]: !current.opened[newName] as boolean,
+        }
+      }
+    })
+  }
+
   const list = () => (
     <Box
       sx={{ width: 250 }}
       role="presentation"
-      onClick={handleToggleDrawer(false)}
       onKeyDown={handleToggleDrawer(false)}
     >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
+      <ListItemButton onClick={() => handleClick('groups')}>
+        <ListItemIcon>
+          <Person />
+        </ListItemIcon>
+        <ListItemText primary="Groups" />
+        {state.opened ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={state.opened.groups} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItemButton sx={{ pl: 4 }}>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <StarBorder />
             </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+            <ListItemText primary="Starred" />
+          </ListItemButton>
+        </List>
+      </Collapse>
       <List>
         <ListItem
           button

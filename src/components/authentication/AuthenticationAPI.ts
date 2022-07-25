@@ -4,11 +4,7 @@ import { AuthenticationCredentials, AuthenticationDetails } from "./Authenticati
 export function authenticate(authenticationCredentials: AuthenticationCredentials) {
   return new Promise<{ data: AuthenticationDetails }>(async (resolve, reject) => {
     try {
-      const res = await axios.post('api/v1/login', authenticationCredentials);
-
-      if (res.data && res.data.token && res.data.refresh_token) {
-        localStorage.setItem('AUTHENTICATION_DETAILS', JSON.stringify(res.data));
-      }
+      const res = await axios().post('api/v1/login', authenticationCredentials);
 
       resolve(res);
     } catch (e: any) {
@@ -20,7 +16,7 @@ export function authenticate(authenticationCredentials: AuthenticationCredential
 export function invalidateToken(authenticationDetails: AuthenticationDetails | null) {
   return new Promise<{}>(async (resolve, reject) => {
     try {
-      await axios.post('api/v1/token/invalidate', {
+      await axios().post('api/v1/token/invalidate', {
         refresh_token: authenticationDetails?.refresh_token
       });
 
