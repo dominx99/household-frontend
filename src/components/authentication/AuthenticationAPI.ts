@@ -28,6 +28,8 @@ export function invalidateToken(authenticationDetails: AuthenticationDetails | n
 
       resolve(true);
     } catch (e: any) {
+      localStorage.removeItem('AUTHENTICATION_DETAILS');
+
       reject('Failed to invalidate token');
     }
   })
