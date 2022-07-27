@@ -8,6 +8,7 @@ import RequireNonAuthentication from "./app/router/RequireNonAuthentication";
 import RouteList from './app/router/RouteList';
 import { useAppDispatch } from "./app/hooks";
 import { setAuthenticationDetails } from "./components/authentication/AuthenticationSlice";
+import GroupPage from "./pages/groups/GroupPage";
 
 function App() {
   let dispatch = useAppDispatch();
@@ -22,13 +23,19 @@ function App() {
           <RequireNonAuthentication redirectTo={RouteList.DASHBOARD}>
             <LoginPage />
           </RequireNonAuthentication>
-        } />
+        }/>
 
         <Route path={RouteList.DASHBOARD} element={
           <RequireAuthentication redirectTo={RouteList.AUTHENTICATE}>
             <DashboardPage />
           </RequireAuthentication>
-        } />
+        }/>
+
+        <Route path={RouteList.GROUP} element={
+          <RequireAuthentication redirectTo={RouteList.AUTHENTICATE}>
+            <GroupPage />
+          </RequireAuthentication>
+        }/>
       </Routes>
     </ThemeProvider>
   );

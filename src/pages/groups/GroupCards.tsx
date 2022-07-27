@@ -10,12 +10,6 @@ const GroupCards: FC<Props> = () => {
   const groups = useAppSelector(selectGroups);
   const fetchGroupsLoading = useAppSelector(selectFetchGroupsLoading);
 
-  useEffect(() => {
-    if (fetchGroupsLoading) {
-      dispatch(fetchGroupsAsync());
-    }
-  })
-
   return (
     <Container sx={{ marginTop: '2rem' }}>
       <Box sx={{ flexGrow: 1 }}>

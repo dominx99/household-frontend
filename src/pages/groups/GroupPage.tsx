@@ -1,3 +1,4 @@
+import { Container, Divider, Typography } from "@mui/material";
 import { FC, useEffect } from "react";
 import { useAppDispatch } from "../../app/hooks";
 
@@ -5,11 +6,11 @@ import Navbar from "../../components/dashboard/layout/Navbar";
 import NavigationDrawer from "../../components/dashboard/layout/NavigationDrawer";
 import { fetchGroupsAsync } from "../../components/groups/GroupSlice";
 import { ThemeWrapper } from "../../components/shared/ThemeWrapper.styles";
-import GroupCards from "../groups/GroupCards";
+import ShoppingListsCards from "../../components/shopping-lists/lists/ShoppingListsCards";
 
 interface Props {}
 
-const DashboardPage: FC<Props> = () => {
+const GroupPage: FC<Props> = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -20,9 +21,14 @@ const DashboardPage: FC<Props> = () => {
     <ThemeWrapper>
       <Navbar />
       <NavigationDrawer />
-      <GroupCards />
+
+      <Container sx={{ marginTop: '1rem' }}>
+        <Typography variant="h4" color="primary.contrastText">Shopping Lists</Typography>
+        <ShoppingListsCards />
+      </Container>
+
     </ThemeWrapper>
   )
 }
 
-export default DashboardPage;
+export default GroupPage;

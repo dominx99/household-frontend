@@ -10,8 +10,8 @@ import { isNavigationDrawerOpened, toggleDrawer } from './NavigationSlice';
 import { ExpandLess, ExpandMore, Logout, Person, Workspaces } from '@mui/icons-material';
 import { authenticationDetails, invalidateTokenAsync } from '../../authentication/AuthenticationSlice';
 import { Collapse, ListItemButton } from '@mui/material';
-import { useState } from 'react';
-import { selectGroups } from '../../groups/GroupSlice';
+import { useEffect, useState } from 'react';
+import { fetchGroupsAsync, selectGroups } from '../../groups/GroupSlice';
 import {
   Link as RouterLink,
   LinkProps as RouterLinkProps,
