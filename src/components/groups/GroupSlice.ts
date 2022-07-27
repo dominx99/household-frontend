@@ -3,6 +3,7 @@ import { RootState } from "../../app/store";
 import { fetchGroups } from "./GroupAPI";
 
 export interface Group {
+  id: string,
   name: string,
 }
 
