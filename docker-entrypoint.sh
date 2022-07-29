@@ -7,5 +7,5 @@ if [ "$APP_ENV" = "dev" ]; then
 else
     npm run build
     npm install -g serve
-    serve -s build -l 8101
+    serve -s build -l 8111
 fi
