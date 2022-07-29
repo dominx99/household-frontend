@@ -1,9 +1,9 @@
 import { ListItem as MuiListItem } from "@mui/material";
 import { FC } from "react";
-import { ListItem } from "./ShoppingListsCards";
+import { ShoppingListItem } from "../../../shopping-lists/api/ShoppingListSlice";
 
 interface Props {
-  items: Array<ListItem>,
+  items: Array<ShoppingListItem>,
 }
 
 const CardListItems: FC<Props> = ({ items }) => {

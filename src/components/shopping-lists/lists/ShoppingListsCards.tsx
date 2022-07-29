@@ -1,56 +1,14 @@
 import { Add } from "@mui/icons-material";
-import { Box, Button, Card, CardActions, CardContent, Chip, Container, Grid, IconButton, List as MuiList, ListItem, Typography } from "@mui/material";
-import { FC, useState } from "react";
+import { Box, Button, Card, CardActions, CardContent, Chip, Grid, IconButton, List as MuiList, Typography } from "@mui/material";
+import { FC } from "react";
+import { useAppSelector } from "../../../app/hooks";
+import { shoppingListsGetter } from "../../../shopping-lists/api/ShoppingListSlice";
 import CardListItems from "./CardListItems";
 
 interface Props {}
 
-export interface ListItem {
-  name: string,
-}
-
-export type List = {
-  name: string,
-  items: Array<ListItem>
-}
-
-interface State {
-  lists: List[]
-}
-
 const ShoppingListCards: FC<Props> = () => {
-  const [state, setState] = useState<State>({
-    lists: [
-      {
-        name: 'Spożywcze',
-        items: [
-          {
-            name: "Mleko",
-          },
-          {
-            name: "Chleb",
-          },
-        ]
-      },
-      {
-        name: 'Inne',
-        items: [
-          {
-            name: "Toster",
-          },
-          {
-            name: "Żarówka"
-          },
-          {
-            name: "Gra planszowa"
-          },
-          {
-            name: "Kwiatek"
-          }
-        ]
-      },
-    ]
-  });
+  const shoppingLists = useAppSelector(shoppingListsGetter);
 
   return (
     <Box sx={{ flexGrow: 1, marginTop: '2rem' }}>
@@ -58,7 +16,7 @@ const ShoppingListCards: FC<Props> = () => {
         container
         spacing={2}
       >
-        {state.lists.map((list, key) => (
+        {shoppingLists.map((list, key) => (
           <Grid
             item key={key}
             lg={4} md={6} xs={12}
@@ -84,7 +42,7 @@ const ShoppingListCards: FC<Props> = () => {
               </CardContent>
               <MuiList>
                 <CardListItems
-                  items={list.items.splice(0, 3)}
+                  items={list.items}
                 />
               </MuiList>
               <CardActions>

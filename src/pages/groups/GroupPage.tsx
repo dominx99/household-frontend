@@ -1,21 +1,35 @@
-import { Container, Divider, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { FC, useEffect } from "react";
-import { useAppDispatch } from "../../app/hooks";
+import { useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import Navbar from "../../components/dashboard/layout/Navbar";
 import NavigationDrawer from "../../components/dashboard/layout/NavigationDrawer";
-import { fetchGroupsAsync } from "../../components/groups/GroupSlice";
+import { fetchGroupsAsync, fetchSelectedGroupAsync, selectedGroupGetter } from "../../components/groups/GroupSlice";
 import { ThemeWrapper } from "../../components/shared/ThemeWrapper.styles";
 import ShoppingListsCards from "../../components/shopping-lists/lists/ShoppingListsCards";
+import { fetchShoppingListsByGroupAsync } from "../../shopping-lists/api/ShoppingListSlice";
 
 interface Props {}
 
 const GroupPage: FC<Props> = () => {
   const dispatch = useAppDispatch();
+  const params = useParams();
+  const selectedGroup = useAppSelector(selectedGroupGetter);
 
   useEffect(() => {
     dispatch(fetchGroupsAsync());
   });
+
+  useEffect(() => {
+    // TODO: Find proper way instead od passing ''
+    dispatch(fetchSelectedGroupAsync(params.id || ''));
+  }, [dispatch, params]);
+
+  useEffect(() => {
+    // TODO: Find proper way instead od passing ''
+    dispatch(fetchShoppingListsByGroupAsync(selectedGroup?.id || ''))
+  }, [dispatch, selectedGroup]);
 
   return (
     <ThemeWrapper>

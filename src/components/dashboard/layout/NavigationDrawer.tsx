@@ -7,11 +7,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { isNavigationDrawerOpened, toggleDrawer } from './NavigationSlice';
-import { ExpandLess, ExpandMore, Logout, Person, Workspaces } from '@mui/icons-material';
+import { Dashboard, ExpandLess, ExpandMore, Logout, Person, Workspaces } from '@mui/icons-material';
 import { authenticationDetails, invalidateTokenAsync } from '../../authentication/AuthenticationSlice';
 import { Collapse, ListItemButton } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { fetchGroupsAsync, selectGroups } from '../../groups/GroupSlice';
+import { useState } from 'react';
+import { selectGroups } from '../../groups/GroupSlice';
 import {
   Link as RouterLink,
   LinkProps as RouterLinkProps,
@@ -103,21 +103,22 @@ export default function SwipeableTemporaryDrawer() {
       role="presentation"
       onKeyDown={handleToggleDrawer(false)}
     >
-      <ListItemButton onClick={() => handleClick('groups')}>
-        <ListItemIcon>
-          <Person />
-        </ListItemIcon>
-        <ListItemText primary="Groups" />
-        {state.opened.groups ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={state.opened.groups} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {groups.map(group => (
-            <ListItemLink to={'/groups/' + group.id} primary={group.name} icon={<Workspaces/>} />
-          ))}
-        </List>
-      </Collapse>
       <List>
+        <ListItemLink key={"Dashboard"} to={'/dashboard'} primary={"Dashboard"} icon={<Dashboard/>} />
+        <ListItemButton onClick={() => handleClick('groups')}>
+          <ListItemIcon>
+            <Person />
+          </ListItemIcon>
+          <ListItemText primary="Groups" />
+          {state.opened.groups ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={state.opened.groups} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {groups.map((group, key) => (
+              <ListItemLink key={key} to={'/groups/' + group.id} primary={group.name} icon={<Workspaces/>} />
+            ))}
+          </List>
+        </Collapse>
         <ListItem
           button
           key={"Logout"}
