@@ -1,6 +1,6 @@
 import { ListItem as MuiListItem } from "@mui/material";
 import { FC } from "react";
-import { ShoppingListItem } from "../../../shopping-lists/api/ShoppingListSlice";
+import { ShoppingListItem } from "../../../shopping-list-items/api/ShoppingListItemsSlice";
 
 interface Props {
   items: Array<ShoppingListItem>,

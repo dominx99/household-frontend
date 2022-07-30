@@ -1,14 +1,20 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Card, CardActions, CardContent, Chip, Grid, IconButton, List as MuiList, Typography } from "@mui/material";
 import { FC } from "react";
-import { useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { toggleAddShoppingListDialog } from "../../../shopping-list-items/api/ShoppingListItemsSlice";
 import { shoppingListsGetter } from "../../../shopping-lists/api/ShoppingListSlice";
 import CardListItems from "./CardListItems";
 
 interface Props {}
 
 const ShoppingListCards: FC<Props> = () => {
+  const dispatch = useAppDispatch();
   const shoppingLists = useAppSelector(shoppingListsGetter);
+
+  const handleOpenDialog = () => {
+    dispatch(toggleAddShoppingListDialog())
+  }
 
   return (
     <Box sx={{ flexGrow: 1, marginTop: '2rem' }}>
@@ -46,7 +52,7 @@ const ShoppingListCards: FC<Props> = () => {
                 />
               </MuiList>
               <CardActions>
-                <IconButton>
+                <IconButton onClick={handleOpenDialog}>
                   <Add />
                 </IconButton>
                 <Button>See more</Button>

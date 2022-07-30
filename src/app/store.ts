@@ -3,6 +3,7 @@ import authenticationReducer from '../components/authentication/AuthenticationSl
 import navigationReducer from '../components/dashboard/layout/NavigationSlice';
 import groupsReducer from '../components/groups/GroupSlice';
 import shoppingListsReducer from '../shopping-lists/api/ShoppingListSlice';
+import shoppingListItemsReducer from '../shopping-list-items/api/ShoppingListItemsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     authentication: authenticationReducer,
     groups: groupsReducer,
     shoppingLists: shoppingListsReducer,
+    shoppingListItems: shoppingListItemsReducer,
   },
 });
 

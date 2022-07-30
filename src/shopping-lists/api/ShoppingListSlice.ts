@@ -1,14 +1,8 @@
 import { createAsyncThunk, createEntityAdapter, createSlice, EntityState } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { ShoppingListItem } from "../../shopping-list-items/api/ShoppingListItemsSlice";
 import { fetchShoppingListsByGroup } from "./ShoppingListsAPI";
 import { shoppingListTransformer } from "./transformer/ShoppingListTransformer";
-
-export interface ShoppingListItem {
-  id: string,
-  name: string,
-  unit: string,
-  amount: number,
-}
 
 export interface ShoppingList {
   id: string,
@@ -16,7 +10,7 @@ export interface ShoppingList {
   items: ShoppingListItem[],
 }
 
-export type ShoppingListState = EntityState<ShoppingList> & {
+type ShoppingListState = EntityState<ShoppingList> & {
   loading: {
     fetchAll: boolean,
   },

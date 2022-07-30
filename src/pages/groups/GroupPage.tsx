@@ -8,6 +8,7 @@ import NavigationDrawer from "../../components/dashboard/layout/NavigationDrawer
 import { fetchGroupsAsync, fetchSelectedGroupAsync, selectedGroupGetter } from "../../components/groups/GroupSlice";
 import { ThemeWrapper } from "../../components/shared/ThemeWrapper.styles";
 import ShoppingListsCards from "../../components/shopping-lists/lists/ShoppingListsCards";
+import AddShoppingListItemDialog from "../../shopping-list-items/components/add/AddShoppingListItemDialog";
 import { fetchShoppingListsByGroupAsync } from "../../shopping-lists/api/ShoppingListSlice";
 
 interface Props {}
@@ -41,6 +42,7 @@ const GroupPage: FC<Props> = () => {
         <ShoppingListsCards />
       </Container>
 
+      <AddShoppingListItemDialog />
     </ThemeWrapper>
   )
 }
