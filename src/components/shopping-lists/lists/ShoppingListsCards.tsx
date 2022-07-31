@@ -2,7 +2,7 @@ import { Add } from "@mui/icons-material";
 import { Box, Button, Card, CardActions, CardContent, Chip, Grid, IconButton, List as MuiList, Typography } from "@mui/material";
 import { FC } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { toggleAddShoppingListDialog } from "../../../shopping-list-items/api/ShoppingListItemsSlice";
+import { initShoppingListItemParams, setAddShoppingListItemParams, toggleAddShoppingListDialog } from "../../../shopping-list-items/api/ShoppingListItemsSlice";
 import { shoppingListsGetter } from "../../../shopping-lists/api/ShoppingListSlice";
 import CardListItems from "./CardListItems";
 
@@ -12,7 +12,10 @@ const ShoppingListCards: FC<Props> = () => {
   const dispatch = useAppDispatch();
   const shoppingLists = useAppSelector(shoppingListsGetter);
 
-  const handleOpenDialog = () => {
+  const handleOpenDialogForList = (listId: string) => {
+    const params = initShoppingListItemParams(listId);
+
+    dispatch(setAddShoppingListItemParams(params));
     dispatch(toggleAddShoppingListDialog())
   }
 
@@ -52,7 +55,7 @@ const ShoppingListCards: FC<Props> = () => {
                 />
               </MuiList>
               <CardActions>
-                <IconButton onClick={handleOpenDialog}>
+                <IconButton onClick={() => handleOpenDialogForList(list.id)}>
                   <Add />
                 </IconButton>
                 <Button>See more</Button>
