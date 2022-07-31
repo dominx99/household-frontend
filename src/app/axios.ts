@@ -16,6 +16,8 @@ const callback = () => {
   }, function (error) {
     if (error.response.status === 401) {
       localStorage.removeItem('AUTHENTICATION_DETAILS');
+
+      window.location.href = '/login';
     }
 
     return Promise.reject(error);

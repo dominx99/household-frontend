@@ -1,5 +1,6 @@
-import { Box, Card, CardContent, Container, Grid, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, Container, Grid, Typography } from "@mui/material";
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { selectGroups } from "../../components/groups/GroupSlice";
 
@@ -24,18 +25,20 @@ const GroupCards: FC<Props> = () => {
                 elevation={1}
                 sx={{ height: '100%' }}
               >
-                <CardContent>
-                  <Grid
-                    container
-                    alignItems="center"
-                  >
-                    <Grid item>
-                      <Typography
-                        variant="h5"
-                      >{group.name}</Typography>
+                <CardActionArea component={Link} to={'/groups/' + group.id}>
+                  <CardContent>
+                    <Grid
+                      container
+                      alignItems="center"
+                    >
+                      <Grid item>
+                        <Typography
+                          variant="h5"
+                        >{group.name}</Typography>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </CardContent>
+                  </CardContent>
+                </CardActionArea>
               </Card>
             </Grid>
           ))}
