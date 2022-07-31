@@ -1,14 +1,12 @@
 import { Box, Card, CardContent, Container, Grid, Typography } from "@mui/material";
-import { FC, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { fetchGroupsAsync, selectFetchGroupsLoading, selectGroups } from "../../components/groups/GroupSlice";
+import { FC } from "react";
+import { useAppSelector } from "../../app/hooks";
+import { selectGroups } from "../../components/groups/GroupSlice";
 
 interface Props {}
 
 const GroupCards: FC<Props> = () => {
-  const dispatch = useAppDispatch();
   const groups = useAppSelector(selectGroups);
-  const fetchGroupsLoading = useAppSelector(selectFetchGroupsLoading);
 
   return (
     <Container sx={{ marginTop: '2rem' }}>

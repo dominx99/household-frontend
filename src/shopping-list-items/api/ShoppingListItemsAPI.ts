@@ -9,3 +9,11 @@ export function addShoppingListItem(shoppingListId: string, form: ShoppingListIt
     resolve(res);
   });
 }
+
+export function deleteShoppingListItem(shoppingListItemId: string) {
+  return new Promise<{}>(async (resolve) => {
+    const res = await axios().delete(`api/v1/shopping-list-items/${shoppingListItemId}`);
+
+    resolve(res);
+  });
+}

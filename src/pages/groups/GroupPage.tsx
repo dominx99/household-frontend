@@ -37,7 +37,7 @@ const GroupPage: FC<Props> = () => {
       <Navbar />
       <NavigationDrawer />
 
-      <Container sx={{ marginTop: '1rem' }}>
+      <Container sx={{ marginTop: '1rem', paddingBottom: '1rem' }}>
         <Typography variant="h4" color="primary.contrastText">Shopping Lists</Typography>
         <ShoppingListsCards />
       </Container>

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { addShoppingListItem } from "./ShoppingListItemsAPI";
+import { addShoppingListItem, deleteShoppingListItem } from "./ShoppingListItemsAPI";
 
 export interface ShoppingListItem {
   id: string,
@@ -50,7 +50,16 @@ export const addShoppingListItemAsync = createAsyncThunk(
 
     return response.data;
   }
-)
+);
+
+export const deleteShoppingListItemAsync = createAsyncThunk(
+  "shoppingListItems/delete",
+  async (shoppingListItemId: string) => {
+    // TODO: Check if something should be done here
+    await deleteShoppingListItem(shoppingListItemId);
+  }
+);
+
 
 const initialState: ShoppingListItemsState = {
   params: {
