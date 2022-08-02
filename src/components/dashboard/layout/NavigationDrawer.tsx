@@ -27,10 +27,11 @@ interface ListItemLinkProps {
   icon?: React.ReactElement;
   primary: string;
   to: string;
+  onClick?: () => void,
 }
 
 function ListItemLink(props: ListItemLinkProps) {
-  const { icon, primary, to } = props;
+  const { icon, primary, to, onClick } = props;
 
   const renderLink = React.useMemo(
     () =>
@@ -38,7 +39,7 @@ function ListItemLink(props: ListItemLinkProps) {
         itemProps,
         ref,
       ) {
-        return <RouterLink to={to} ref={ref} {...itemProps} role={undefined} />;
+        return <RouterLink to={to} ref={ref} {...itemProps} role={undefined} onClick={onClick} />;
       }),
     [to],
   );
@@ -115,7 +116,12 @@ export default function SwipeableTemporaryDrawer() {
         <Collapse in={state.opened.groups} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {groups.map((group, key) => (
-              <ListItemLink key={key} to={'/groups/' + group.id} primary={group.name} icon={<Workspaces/>} />
+              <ListItemLink
+                key={key} to={'/groups/' + group.id}
+                primary={group.name}
+                icon={<Workspaces/>}
+                onClick={() => dispatch(toggleDrawer(false))}
+              />
             ))}
           </List>
         </Collapse>
